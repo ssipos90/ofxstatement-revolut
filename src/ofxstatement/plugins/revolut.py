@@ -58,7 +58,11 @@ class RevolutCSVStatementParser(CsvStatementParser):
         stmt_line = super().parse_record(line)
 
         # Generate a unique ID
-        balance = self.parse_float(line[c["Balance"]])
+        try:
+            balance = self.parse_float(line[c["Balance"]])
+        except:
+            balance = .0
+
         stmt_line.id = md5(f"{stmt_line.date}-{stmt_line.payee}-{stmt_line.amount}-{balance}".encode())\
             .hexdigest()
 
@@ -108,7 +112,6 @@ class RevolutPlugin(Plugin):
         ]
 
         if set(required_columns).issubset(csv_columns):
-
             f.seek(0)
             parser = RevolutCSVStatementParser(f)
             parser.columns = {col: csv_columns.index(col) for col in csv_columns}

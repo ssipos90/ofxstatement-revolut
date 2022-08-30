@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[dev-packages]
+mypy = "*"
+pytest = "*"
+black = "*"
+
+[packages]
+ofxstatement = "0.8.0"
+ofxstatement-revolut = {editable = true,path = "."}
+
+[requires]
+python_version = "3.10"
